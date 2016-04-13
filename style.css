@@ -1,0 +1,15 @@
+.disp{
+	display: none;
+}
+a{
+	color: #000;
+	text-decoration: none;
+	font-family: Verdana,sans-serif;
+}
+a:hover{
+	color: #ccc;
+}
+.use{
+	font-size: 24px;
+	
+}
