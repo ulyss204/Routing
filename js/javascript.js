@@ -8,7 +8,7 @@ var Router = {
         this.root = options && options.root ? '/' + this.clearSlashes(options.root) + '/' : '/';
         return this;
     },
-    getFragment: function() {
+    getFragment: function() { // tells us where we are at the moment
         var fragment = '';
         if(this.mode === 'history') {
             fragment = this.clearSlashes(decodeURI(location.pathname + location.search));
@@ -23,7 +23,7 @@ var Router = {
     clearSlashes: function(path) {
         return path.toString().replace(/\/$/, '').replace(/^\//, '');
     },
-    add: function(re, handler) {
+    add: function(re, handler) { // add route
         if(typeof re == 'function') {
             handler = re;
             re = '';
@@ -40,13 +40,13 @@ var Router = {
         }
         return this;
     },
-    flush: function() {
+    flush: function() {  //reinitialize the class
         this.routes = [];
         this.mode = null;
         this.root = '/';
         return this;
     },
-    check: function(f) {
+    check: function(f) { //get the current address
         var fragment = f || this.getFragment();
         for(var i=0; i<this.routes.length; i++) {
             var match = fragment.match(this.routes[i].re);
@@ -58,7 +58,7 @@ var Router = {
         }
         return this;
     },
-    listen: function() {
+    listen: function() { //monitoring for changes
         var self = this;
         var current = self.getFragment();
         var fn = function() {
@@ -71,7 +71,7 @@ var Router = {
         this.interval = setInterval(fn, 50);
         return this;
     },
-    navigate: function(path) {
+    navigate: function(path) { //changing the url
         path = path ? path : '';
         if(this.mode === 'history') {
             history.pushState(null, null, this.root + this.clearSlashes(path));
